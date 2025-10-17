@@ -19,7 +19,7 @@ export type SmartSearchProps = {
   clearOnSelect?: boolean
 }
 
-function normalize(s: string){ return s.trim().toLowerCase() }
+function normalize(s: string) { return s.trim().toLowerCase() }
 
 export default function SmartSearch({
   items,
@@ -29,7 +29,7 @@ export default function SmartSearch({
   minChars = 1,
   theme = 'light',
   clearOnSelect = false
-}: SmartSearchProps){
+}: SmartSearchProps) {
 
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
@@ -38,11 +38,11 @@ export default function SmartSearch({
   const inputRef = useRef<HTMLInputElement | null>(null)
   const listRef = useRef<HTMLUListElement | null>(null)
 
-  useEffect(()=>{
-    if (query.length >= minChars){
+  useEffect(() => {
+    if (query.length >= minChars) {
       const q = normalize(query)
       const filtered = items.filter(it => {
-        return [it.title, it.subtitle, it.type].some(v=>!!v && normalize(String(v)).includes(q))
+        return [it.title, it.subtitle, it.type].some(v => !!v && normalize(String(v)).includes(q))
       })
       setResults(filtered)
       setOpen(true)
@@ -53,42 +53,42 @@ export default function SmartSearch({
     }
   }, [query, items, minChars])
 
-  useEffect(()=>{
-    function onDocClick(e: MouseEvent){
+  useEffect(() => {
+    function onDocClick(e: MouseEvent) {
       if (!inputRef.current) return
-      if (!inputRef.current.contains(e.target as Node) && !listRef.current?.contains(e.target as Node)){
+      if (!inputRef.current.contains(e.target as Node) && !listRef.current?.contains(e.target as Node)) {
         setOpen(false)
       }
     }
     document.addEventListener('click', onDocClick)
-    return ()=> document.removeEventListener('click', onDocClick)
-  },[])
+    return () => document.removeEventListener('click', onDocClick)
+  }, [])
 
-  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>){
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (!open) return
-    if (e.key === 'ArrowDown'){
+    if (e.key === 'ArrowDown') {
       e.preventDefault()
       setHighlight(h => Math.min(h + 1, results.length - 1))
-    } else if (e.key === 'ArrowUp'){
+    } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setHighlight(h => Math.max(h - 1, 0))
-    } else if (e.key === 'Enter'){
+    } else if (e.key === 'Enter') {
       e.preventDefault()
       const item = results[highlight]
       if (item) selectItem(item)
-    } else if (e.key === 'Escape'){
+    } else if (e.key === 'Escape') {
       setOpen(false)
       inputRef.current?.blur()
     }
   }
 
-  function selectItem(item: SearchItem){
+  function selectItem(item: SearchItem) {
     onSelect && onSelect(item)
     if (clearOnSelect) setQuery('')
     setOpen(false)
   }
 
-  function clear(){
+  function clear() {
     setQuery('')
     setOpen(false)
     inputRef.current?.focus()
@@ -104,7 +104,7 @@ export default function SmartSearch({
           aria-controls="smart-search-list"
           placeholder={placeholder}
           value={query}
-          onChange={e=>setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
           onKeyDown={onKeyDown}
           className={styles.input}
         />
@@ -122,8 +122,8 @@ export default function SmartSearch({
               role="option"
               aria-selected={highlight === idx}
               className={`${styles.item} ${highlight === idx ? styles.highlight : ''}`}
-              onMouseEnter={()=>setHighlight(idx)}
-              onMouseDown={(e)=>{ e.preventDefault(); selectItem(it) }} // use onMouseDown to select before blur
+              onMouseEnter={() => setHighlight(idx)}
+              onMouseDown={(e) => { e.preventDefault(); selectItem(it) }} // use onMouseDown to select before blur
             >
               <div className={styles.itemTitle}>{it.title}</div>
               {it.subtitle && <div className={styles.itemSubtitle}>{it.subtitle}</div>}
