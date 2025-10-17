@@ -1,0 +1,13 @@
+.wrap{position:relative;font-family:inherit}
+.inputRow{display:flex;align-items:center;border:1px solid #e5edf8;padding:8px;border-radius:8px;gap:8px;background:white}
+.input{flex:1;border:0;outline:0;font-size:14px;padding:6px 4px;background:transparent}
+.clear{background:transparent;border:0;cursor:pointer;font-size:14px;color:var(--soft-gray)}
+.loader{font-size:12px;color:var(--soft-gray)}
+.list{position:absolute;left:0;right:0;top:100%;background:white;border:1px solid #e5edf8;border-radius:8px;margin-top:8px;max-height:260px;overflow:auto;box-shadow:0 8px 24px rgba(11,87,208,0.08);z-index:50;padding:6px}
+.item{padding:8px;border-radius:6px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.itemTitle{font-weight:600}
+.itemSubtitle{font-size:12px;color:#5b6b7a}
+.itemType{font-size:11px;color:var(--royal-blue);font-weight:600}
+.highlight{background:linear-gradient(90deg, rgba(11,87,208,0.06), rgba(11,87,208,0.02));}
+.empty{padding:12px;color:var(--soft-gray);text-align:center}
+.dark .inputRow{background:#0b1724;color:#fff;border:1px solid #1f2a3a}
